@@ -38,16 +38,16 @@ All the necessary playbooks used to keep the env up to date with tools and confi
     * Find a way to automate package installation ?
     * Find a way to automate configuration - if present
 
-
 ### Docker images folder
 #### One sub-folder for every image
 
 * Ansible
-* youtude-dl
+* youtube-dl
 * Linters / Code Checkers
     * ESLint / JSHint
     * CSSLint
-    * Find one for Java
+    * Checkstyle
+    * Findbugs
 * Tomcat (8 or later)
 * Nginx (latest)
     * Configured for Python
