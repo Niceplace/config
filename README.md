@@ -1,4 +1,4 @@
-# Development Environment, contains all files necessary for auto-configuration
+# This repo is for my Development Environment, it contains all files necessary for auto-configuration
 
 # Requirements
 * Unbuntu 16.04 or latest
@@ -16,6 +16,7 @@ This folder is used for basic profile configuration such as :
 * Vim configuration and probably just the list of installed plugins
 
 ## Playbooks folder
+### Everything will be separated in roles / tasks with a global playbook according to ansible best practices
 
 All the necessary playbooks used to keep the env up to date with tools and configs are kept here
 
@@ -24,11 +25,11 @@ All the necessary playbooks used to keep the env up to date with tools and confi
     * Latest VIM
 * Java (8 or later, via PPA)
 * Netbeans (8.1 or later)
-* Node + NPM (screw N
+* Node + NPM (no NVM for now)
     * Yeoman
+    * Yeoman generator for basic webapp
     * Gulp
     * Bower
-    * 
 * Ruby 
 * Jekyll
 * Php
@@ -39,6 +40,7 @@ All the necessary playbooks used to keep the env up to date with tools and confi
 
 
 ## Docker images folder
+### One sub-folder for every image
 
 * Ansible
 * youtude-dl
