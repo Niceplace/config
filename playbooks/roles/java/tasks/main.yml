@@ -1,0 +1,30 @@
+---
+- name: add java ppa
+  apt_repository:
+    repo: "ppa:webupd8team/java"
+    state: present
+    update_cache: yes
+
+- name: accept oracle terms
+  debconf:
+    name: '{{ item }}'
+    question: 'shared/accepted-oracle-license-v1-1'
+    vtype: 'select'
+    value: 'true'
+  with_items:
+    - oracle-java8-installer
+
+- name: nuke java7
+  apt: state=absent name={{ item }}
+  with_items:
+    - oracle-java7-installer
+    - oracle-java7-unlimited-jce-policy
+
+- name: install java
+  apt:
+    state: present
+    name: '{{ item }}'
+  with_items:
+    - oracle-java8-installer
+    - oracle-java8-set-default
+    - oracle-java8-unlimited-jce-policy
