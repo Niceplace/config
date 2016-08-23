@@ -1,12 +1,12 @@
 # This repo is for my Development Environment, it contains all files necessary for auto-configuration
 
-# Requirements
+## Requirements
 * Unbuntu 16.04 or latest
 * Docker for $UBUNTU_VERSION (and its dependencies)
 * Ansible (will run in docker) -> Python dependencies needed on localhost as well #todo
 * Git (installed by default)
 
-## Profile folder
+### Profile folder
 
 This folder is used for basic profile configuration such as :
 
@@ -15,8 +15,8 @@ This folder is used for basic profile configuration such as :
 * ~/.bashrc
 * Vim configuration and probably just the list of installed plugins
 
-## Playbooks folder
-### Everything will be separated in roles / tasks with a global playbook according to ansible best practices
+### Playbooks folder
+#### Everything will be separated in roles / tasks with a global playbook according to ansible best practices
 
 All the necessary playbooks used to keep the env up to date with tools and configs are kept here
 
@@ -39,8 +39,8 @@ All the necessary playbooks used to keep the env up to date with tools and confi
     * Find a way to automate configuration - if present
 
 
-## Docker images folder
-### One sub-folder for every image
+### Docker images folder
+#### One sub-folder for every image
 
 * Ansible
 * youtude-dl
