@@ -1,0 +1,26 @@
+---
+  - name: install php7 for nginx and mysql
+    become: yes
+    become_method: sudo
+    apt:
+      update_cache: yes
+      state: present
+      name: {{ item }}
+    with_items:
+      - php-fpm
+      - php-mysql
+  - name: secure PHP preprocessor
+    become: yes
+    become_method: sudo
+    - replace:
+        dest: "/etc/php/{{ php_version }}/fpm/php.ini"
+        state: present
+        regexp: "^\;cgi\.fix\_pathinfo=1$"
+        replace: "cgi.fix_pathinfo=0"
+        backup: yes
+  - name : restart php preprocessor
+    become: yes
+    become_method: sudo
+    service:
+      name: php7.0-fpm
+      state: restarted

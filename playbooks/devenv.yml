@@ -1,0 +1,14 @@
+---
+- hosts: ubuntu-hosts
+  roles:
+    - java
+    - php
+    - node-npm
+    - ruby
+    - vim
+    - netbeans
+    - jekyll
+    - atom
+    - wordpress
+
+    
