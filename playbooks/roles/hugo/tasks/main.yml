@@ -1,0 +1,14 @@
+---
+- name: hugo | install python pigments
+  command:
+    state: present
+    name: hugo
+  become: true
+  become_method: sudo
+
+- name: hugo | install hugo package
+  apt:
+    state: present
+    name: hugo
+  become: true
+  become_method: sudo

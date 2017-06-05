@@ -1,0 +1,28 @@
+---
+- name: linux-utils | ensure /opt directory is owned by current user
+    file:
+        path: /opt
+        owner: {{ user_id }}
+        group: {{ user_group }}
+        mode: 0755
+
+- name: linux-utils | install vim latest
+    apt:
+        state: present
+        name: vim
+    become: true
+    become_method: sudo
+
+- name: linux-utils | add clementine music player ppa
+    apt_repository:
+        repo: 'ppa:me-davidsansome/clementine'
+        state: present
+        update_cache: yes
+
+- name: linux-utils | install clementine music player
+    apt:
+        name: clementine
+        state: latest
+        update_cache: yes
+    become: true
+    become_method: sudo

@@ -1,0 +1,22 @@
+---
+- name : atom | download deb package
+    get_url:
+        url: {{ atom['url] }}
+        dest: /tmp/atom_installer.deb
+
+- name: atom | install deb package
+    apt:
+        deb: /tmp/atom_installer.deb
+        state: present
+    become: true
+    become_method: sudo
+    removes: /tmp/atom_installer.deb
+
+- name: atom | install plugins
+    command: apm install {{ item }}
+    with_items:
+        - language-docker
+        - linter
+        - platformio-ide-terminal
+        - autocomplete-python
+        - emmet

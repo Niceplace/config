@@ -1,0 +1,16 @@
+---
+# Default user and group for system
+user_id: niceplace
+user_group: niceplace
+
+# Main folder where custom software is to be installed
+software_installation_folder : "/opt"
+
+# Pycharm download URL
+pycharm:
+    url: https://download.jetbrains.com/python/pycharm-community-2017.1.3.tar.gz
+    checksum: 6dedbf06c62490047b5d8a539c94af89affc80048f4cf79eea25d29f50894a1b
+
+# Atom download url
+atom:
+    url: https://atom.io/download/deb

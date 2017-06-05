@@ -1,0 +1,28 @@
+---
+- name: nodejs | remove old node package to avoid conflicts
+    apt:
+      name: node
+      state: absent
+
+- name: nodejs | make sure dependencies are installed
+    apt:
+      name: build-essential
+      state: present
+      update_cache: yes
+
+- name: nodejs | fetch ppa install script for nodesource ppa
+    get_url:
+      url: https://deb.nodesource.com/setup_6.x
+      dest: /tmp/nodejs_install.sh
+
+- name: nodejs | run ppa install script
+    script: /tmp/nodejs_install.sh
+    args:
+        removes: /tmp/nodejs_install.sh
+    become: true
+    become_method: sudo
+
+- name: install nodejs
+    apt:
+      name: nodejs
+      state: present

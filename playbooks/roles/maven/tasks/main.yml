@@ -1,0 +1,8 @@
+---
+- name : maven | install maven
+    apt:
+        name: maven
+        state: latest
+        update_cache: yes
+    become: true
+    become_method: sudo
