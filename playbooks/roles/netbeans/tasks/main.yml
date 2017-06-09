@@ -1,5 +1,0 @@
----
-  - name: ensure java installation is present
-    shell: java -version
-    register: java_version
-  

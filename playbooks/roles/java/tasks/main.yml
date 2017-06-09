@@ -1,7 +1,5 @@
 ---
 - name: java | add java ppa
-  become: true
-  become_method: sudo
   when:
     - ansible_distribution == "Ubuntu"
     - ansible_distribution_version >= "16.04"
@@ -9,10 +7,10 @@
     repo: "ppa:webupd8team/java"
     state: present
     update_cache: yes
+  become: true
+  become_method: sudo
 
 - name: java | accept oracle terms
-  become: yes
-  become_method: sudo
   debconf:
     name: '{{ item }}'
     question: 'shared/accepted-oracle-license-v1-1'
@@ -20,20 +18,20 @@
     value: 'true'
   with_items:
     - oracle-java8-installer
-
-- name: java | nuke java7
   become: yes
   become_method: sudo
+
+- name: java | nuke java7
   apt:
     state: absent
     name: {{ item }}
   with_items:
     - oracle-java7-installer
     - oracle-java7-unlimited-jce-policy
-
-- name: java | install java8 with default & jce-policy
   become: yes
   become_method: sudo
+
+- name: java | install java8 with default & jce-policy
   apt:
     state: present
     name: '{{ item }}'
@@ -41,3 +39,16 @@
     - oracle-java8-installer
     - oracle-java8-set-default
     - oracle-java8-unlimited-jce-policy
+  become: yes
+  become_method: sudo
+
+- name: java | set JAVA_HOME in .profile
+  blockinfile:
+      path: "{{ ansible_env.HOME }}/.profile"
+      state: present
+      insertafter: EOF
+      block: |
+        "export JAVA_HOME=/usr/bin/java"
+        "export PATH="$PATH:$JAVA_HOME/bin"
+  become: true
+  become_user: "{{ user }}"

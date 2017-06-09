@@ -1,0 +1,50 @@
+---
+- name: docker | install dependencies
+  apt:
+    name: {{ item }}
+    with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+  update_cache: yes
+  become: true
+  become_method: sudo
+
+- name : docker | install docker's official GPG key
+  apt_key:
+    keyserver: https://download.docker.com/linux/ubuntu/gpg
+    id: 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+    state: present
+  become: true
+  become_method: sudo
+
+- name: docker | obtain lsb-release -cs
+  command: lsb-release -cs
+  register: {{ lsb_release_cs }}
+
+- name: docker | add apt repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu{{ lsb_release_cs }}stable"
+    state: present
+  become: true
+  become_method: sudo
+
+- name: docker | update apt
+  apt:
+    update_cache: yes
+  become: true
+  become_method: sudo
+
+- name: docker | install docker-ce
+  apt:
+    name: docker-ce
+  become: true
+  become_method: sudo
+
+- name: docker | install ansible dependencies
+  apt:
+    name: docker-py
+    state: present
+  become: true
+  become_method: sudo
