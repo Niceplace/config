@@ -1,20 +1,62 @@
 # This repo is for my Development Environment, it contains all files necessary for auto-configuration
 
-## Requirements
-* Unbuntu 16.04 or latest
-* Docker for $UBUNTU_VERSION (and its dependencies)
-* Ansible (will run in docker) -> Python dependencies needed on localhost as well #todo
-* Git (installed by default)
+# Requirements to run the playbook
+* Unbuntu 16.04
+* Ansible 2.3 [installation instructions](http://docs.ansible.com/ansible/intro_installation.html#latest-releases-via-apt-debian)
 
-### Playbooks folder
-#### Everything will be separated in roles / tasks with a global playbook according to ansible best practices
+## Playbook content
+### The playbook is configured to run on localhost in the provided **hosts** file
 
-All the necessary playbooks used to keep the env up to date with tools and configs are kept here
+You need to run the playbook with the option to specify which hosts file to use (**-i**) and the option to ask for sudo password when needed (**--ask-sudo-pass**).
+The following commands assume you are positioned in the "playbooks" directory.
+```
+ansible-playbook -i hosts --ask-sudo-pass devenv.yml
+```
+If you need to run the playbook in check mode only, add the (**--check**) option at the end
+```
+ansible-playbook -i hosts --ask-sudo-pass devenv.yml --check
+```
+
+The playbook installs and configures the following software :
 
 * Up-to-date OS (Ubuntu 16.04 LTS)
-    * apt-get update
-    * Latest VIM
-* Java (8 or later, via PPA)
-* Netbeans (8.1 or later)
-* Node + NPM (no NVM for now)
+    * Atom (with plugins)
+        * language-docker
+        * linter
+        * platformio-ide-terminal
+        * autocomplete-python
+        * emmet
+        * dash
+    * Docker & docker-compose
+    * dockerized redmine installation (from sameersbn)
+    * dockerized wekan server (open-source trello)
+    * dockerized eclipse (eclipse-che)
+    * hugo
+    * java (8)
+    * maven (from latest archive, not apt)
+    * node (from latest stable release)
+    * pycharm
+    * python (2 & 3)    
+    * zeal (multiple docsets downloaded)
+        * Ansible
+        * Bootstrap (3 & 4)
+        * Python (2 & 3)
+        * D3JS
+        * Flask
+        * NodeJS
+        * SVG
+        * Jquery
+        * Sass
+        * WordPress
+    * redshift (f.lux equivalent)
+    * tlp (thinkpad power control utility)
+    * vlc media player
+    * clementine music player
+    * latest git for ubuntu
+    * latest geany for ubuntu
+    * latest gparted for ubuntu
+    * latest meld for ubuntu
+    * latest vim for ubuntu
 
+Also, it configures the **/opt** folder to be owned by the current user and to contain all docker, docker-compose projects and volume folders.
+All downloaded docker-compose projects are automatically started.
