@@ -25,3 +25,9 @@
   become: true
   become_method: sudo
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: python | install docker-py
+  command: pip install docker-py
+  become: true
+  become_method: sudo
+  ignore_errors: "{{ ansible_check_mode }}"

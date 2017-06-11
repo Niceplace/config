@@ -41,6 +41,7 @@
     - oracle-java8-unlimited-jce-policy
   become: true
   become_method: sudo
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: java | set JAVA_HOME in .profile
   blockinfile:

@@ -3,8 +3,8 @@
   apt:
     state: present
     name: "{{ item }}"
-    with_items:
-      - redshift
-      - redshift-gtk
+  with_items:
+    - redshift
+    - redshift-gtk
   become: true
   become_method: sudo

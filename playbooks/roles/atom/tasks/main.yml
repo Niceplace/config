@@ -10,11 +10,13 @@
     state: present
   become: true
   become_method: sudo
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: atom | delete downloaded .deb package
   file:
     path: /tmp/atom_installer.deb
     state: absent
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: atom | install plugins
   command: "apm install {{ item }}"

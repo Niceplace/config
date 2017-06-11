@@ -8,7 +8,7 @@
 
 - name: zeal | download & extract docsets to zeal docset folder
   unarchive:
-      url: "{{ item.url }}"
+      src: "{{ item.url }}"
       dest: "{{ item.destination }}"
       remote_src: true
   with_items:
@@ -26,6 +26,7 @@
       - { url: "http://london.kapeli.com/feeds/WordPress.tgz", destination: "{{ zeal_docset_folder }}/WordPress.tgz" }
   become: yes
   become_user: "{{ ansible_env.USER }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: zeal | delete docset archives if present
   file:
@@ -35,3 +36,4 @@
       - "{{ zeal_docset_folder }}/*.tgz"
   become: true
   become_user: "{{ ansible_env.USER }}"
+  ignore_errors: "{{ ansible_check_mode }}"

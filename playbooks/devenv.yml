@@ -4,6 +4,7 @@
     - atom
     - clementine
     - docker
+    - docker-compose
     - eclipse-che
     - hugo
     - java

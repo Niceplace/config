@@ -14,7 +14,7 @@
 - name : docker | install docker's official GPG key
   apt_key:
     keyserver: https://download.docker.com/linux/ubuntu/gpg
-    id: 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     state: present
   become: true
   become_method: sudo
@@ -73,9 +73,9 @@
   become: true
   become_method: sudo
 
-- name: docker | install ansible dependencies for docker module
-  apt:
-    name: docker-py
-    state: present
-  become: true
-  become_method: sudo
+#- name: docker | install ansible dependencies for docker module
+  #apt:
+#    name: docker-py
+    #state: present
+  #become: true
+  #become_method: sudo

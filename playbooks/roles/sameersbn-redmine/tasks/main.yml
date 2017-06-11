@@ -34,3 +34,4 @@
 - name: sameersbn-redmine | start docker-compose project as detached
   command: "docker-compose -f {{ docker_compose_projects }}/sameersbn-redmine/docker-compose.yml up -d"
   ignore_errors: "{{ ansible_check_mode }}"
+  

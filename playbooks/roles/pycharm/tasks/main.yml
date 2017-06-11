@@ -1,7 +1,7 @@
 ---
 - name: pycharm | download pycharm installer
   get_url:
-    url: "{{ pycharm['url] }}"
+    url: "{{ pycharm['url'] }}"
     checksum: "{{ pycharm['checksum'] }}"
     dest: "{{ pycharm_installation_folder }}/pycharm_installer.tar.gz"
     group: "{{ ansible_env.USER }}"
@@ -15,3 +15,4 @@
     group: "{{ ansible_env.USER }}"
     owner: "{{ ansible_env.USER }}"
     mode: 0755
+  ignore_errors: "{{ ansible_check_mode }}"

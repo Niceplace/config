@@ -34,6 +34,7 @@
     mode: 0775
   become: yes
   become_user: "{{ ansible_env.USER }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: nodejs | fetch ppa install script for nodesource ppa
   get_url:
@@ -44,6 +45,7 @@
   script: /tmp/nodejs_install.sh
   args:
     removes: /tmp/nodejs_install.sh
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: nodejs | install nodejs with apt
   apt:
@@ -51,6 +53,7 @@
     state: present
   become: true
   become_method: sudo
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: nodejs | configure prefix
   command: npm config set prefix '~/.npm-global'

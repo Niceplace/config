@@ -3,3 +3,4 @@ dependencies:
   - { role: docker }
   - { role: java }
   - { role: maven }
+  - { role: python }
