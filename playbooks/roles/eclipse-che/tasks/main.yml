@@ -1,13 +1,12 @@
 ---
-  - name: eclipse che | ensure java installation is present
-    docker_container:
-        name: eclipse-che
-        image: eclipse/che
-        command: start
-        restart: yes
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
-          - /opt/docker-volumes/eclipse/data:/data
-          - /opt/docker-volumes/eclipse/data/instance:/data/instance
-          - /opt/docker-volumes/eclipse/data/backup:/data/backup
-    register: java_version
+- name: eclipse che | ensure java installation is present
+  docker_container:
+    name: eclipse-che
+    image: eclipse/che
+    command: start
+    restart: yes
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/docker-volumes/eclipse/data:/data
+      - /opt/docker-volumes/eclipse/data/instance:/data/instance
+      - /opt/docker-volumes/eclipse/data/backup:/data/backup

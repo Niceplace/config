@@ -1,12 +1,20 @@
 ---
 - hosts: ubuntu-hosts
   roles:
-    - java
-    - php
-    - node-npm
-    - ruby
-    - vim
-    - netbeans
-    - jekyll
     - atom
-    - wordpress
+    - clementine
+    - docker
+    - eclipse-che
+    - hugo
+    - java
+    - linux-utils
+    - maven
+    - node-npm
+    - pycharm
+    - python
+    - redshift
+    - sameersbn-redmine
+    - tlp
+    - vlc
+    - wekan-server
+    - zeal

@@ -1,0 +1,19 @@
+---
+version: '2'
+
+services:
+  wekan:
+    image: rubberduck/wekan
+    restart: always
+    depends_on:
+      - wekandb
+    environment:
+      - MONGO_URL=mongodb://wekandb/wekan
+      - ROOT_URL=http://wekan-server.niceplace.ca:10081
+    ports:
+      - 10081:80
+  wekandb:
+     image: mongo
+     restart: always
+     volumes:
+       - {{ docker_volumes }}/wekan/data:/data/db

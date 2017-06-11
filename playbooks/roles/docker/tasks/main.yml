@@ -1,13 +1,13 @@
 ---
 - name: docker | install dependencies
   apt:
-    name: {{ item }}
-    with_items:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
-  update_cache: yes
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
   become: true
   become_method: sudo
 
@@ -21,7 +21,8 @@
 
 - name: docker | obtain lsb-release -cs
   command: lsb-release -cs
-  register: {{ lsb_release_cs }}
+  register: lsb_release_cs
+  check_mode: yes
 
 - name: docker | add apt repository
   apt_repository:
@@ -42,7 +43,37 @@
   become: true
   become_method: sudo
 
-- name: docker | install ansible dependencies
+- name: docker | create docker volumes folder
+  file:
+      path: /opt/docker-volumes
+      state: directory
+      owner: "{{ ansible_env.USER }}"
+      group: "{{ ansible_env.USER }}"
+      mode: 0755
+  become: true
+  become_method: sudo
+
+- name: docker | create docker projects folder
+  file:
+      path: /opt/docker-projects
+      state: directory
+      owner: "{{ ansible_env.USER }}"
+      group: "{{ ansible_env.USER }}"
+      mode: 0755
+  become: true
+  become_method: sudo
+
+- name: docker | create docker-compose projects folder
+  file:
+      path: /opt/docker-compose-projects
+      state: directory
+      owner: "{{ ansible_env.USER }}"
+      group: "{{ ansible_env.USER }}"
+      mode: 0755
+  become: true
+  become_method: sudo
+
+- name: docker | install ansible dependencies for docker module
   apt:
     name: docker-py
     state: present

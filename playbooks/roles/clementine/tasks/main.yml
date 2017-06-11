@@ -1,14 +1,14 @@
 ---
 - name: linux-utils | add clementine music player ppa
-    apt_repository:
-        repo: 'ppa:me-davidsansome/clementine'
-        state: present
-        update_cache: yes
+  apt_repository:
+    repo: "ppa:me-davidsansome/clementine"
+    state: present
+    update_cache: yes
 
 - name: linux-utils | install clementine music player
-    apt:
-        name: clementine
-        state: latest
-        update_cache: yes
-    become: true
-    become_method: sudo
+  apt:
+    name: clementine
+    state: latest
+    update_cache: yes
+  become: true
+  become_method: sudo

@@ -1,0 +1,8 @@
+---
+- name: vlc | install vlc latest
+  apt:
+    state: present
+    name: vlc
+    update_cache: yes
+  become: true
+  become_method: sudo

@@ -1,0 +1,36 @@
+---
+- name: sameersbn-redmine | create redmine volume projects folder + certs directory
+  file:
+      path: "{{ docker_volumes }}/sameersbn-redmine/redmine/certs"
+      state: directory
+      owner: "{{ ansible_env.USER }}"
+      group: "{{ ansible_env.USER }}"
+      mode: 0755
+  become: true
+  become_method: sudo
+
+- name: sameersbn-redmine | create redmine docker-compose project folder
+  file:
+    path: "{{ docker_compose_projects }}/sameersbn-redmine"
+    state: directory
+    group: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_env.USER }}"
+    mode: 0755
+  become: true
+  become_method: sudo
+
+- name: sameersbn-redmine | copy docker-compose.yml to sameersbn project folder
+  template:
+    src: docker-compose-redmine.yml.j2
+    dest: "{{ docker_compose_projects }}/sameersbn-redmine/docker-compose.yml"
+
+- name: sameersbn-redmine | generate stronger server parameters
+  command: openssl dhparam -out dhparam.pem 2048
+  args:
+    chdir: "{{ docker_volumes }}/sameersbn-redmine/redmine/certs"
+    creates: "{{ docker_volumes }}/sameersbn-redmine/redmine/certs/dhparam.pem"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: sameersbn-redmine | start docker-compose project as detached
+  command: "docker-compose -f {{ docker_compose_projects }}/sameersbn-redmine/docker-compose.yml up -d"
+  ignore_errors: "{{ ansible_check_mode }}"

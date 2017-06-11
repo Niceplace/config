@@ -1,23 +1,27 @@
 ---
 - name: python | ensure python3 is installed
-    apt:
-        state: present
-        name: python3
-    become: true
-    become_method: sudo
+  apt:
+    state: present
+    name: python3
+  become: true
+  become_method: sudo
 
 - name: python | install python packages for projects
-    apt:
-        state: present
-        name: {{ item }}
-    with_items:
-        - python-pip
-        - python3-dev
-        - python3-venv
-    become: true
-    become_method: sudo
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - python-pip
+    - python3-dev
+    - python3-venv
+    - python3-pyaudio
+    - python3-setuptools
+    - python3-tk
+  become: true
+  become_method: sudo
 
-- name: python | make sure poip
-    command: pip install -U pip setuptools
-    become: true
-    become_method: sudo
+- name: python | make sure pip is up to date
+  command: pip install -U pip setuptools
+  become: true
+  become_method: sudo
+  ignore_errors: "{{ ansible_check_mode }}"

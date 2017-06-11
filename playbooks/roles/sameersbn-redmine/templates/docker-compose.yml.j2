@@ -1,0 +1,54 @@
+version: '2'
+
+services:
+  postgresql:
+    restart: always
+    image: sameersbn/postgresql:9.6
+    environment:
+    - DB_USER=redmine
+    - DB_PASS=password
+    - DB_NAME=redmine_production
+    volumes:
+    - {{ docker_volumes }}/sameersbn-redmine/postgresql:/var/lib/postgresql
+
+  redmine:
+    restart: always
+    image: sameersbn/redmine:3.3.1-1
+    depends_on:
+    - postgresql
+    environment:
+    - TZ=America/Montreal
+
+    - DB_ADAPTER=postgresql
+    - DB_HOST=postgresql
+    - DB_PORT=5432
+    - DB_USER=redmine
+    - DB_PASS=password
+    - DB_NAME=redmine_production
+
+    - REDMINE_PORT=10080
+    - REDMINE_HTTPS=true
+    - SSL_CERTIFICATE_PATH=/home/redmine/data/certs/redmine.crt
+    - SSL_KEY_PATH=/home/redmine/data/certs/redmine.key
+    - SSL_DHPARAM_PATH=/home/redmine/data/certs/dhparam.pem
+
+    - REDMINE_RELATIVE_URL_ROOT=/redmine
+    - REDMINE_SECRET_TOKEN=vPnykFH55UJdF0ihLOzSyz8pTclam5QkICLF0feRX699eMbmzClVAg4HXthSK9bP
+
+    - REDMINE_SUDO_MODE_ENABLED=true
+    - REDMINE_SUDO_MODE_TIMEOUT=15
+
+    - REDMINE_CONCURRENT_UPLOADS=2
+
+    - REDMINE_BACKUP_SCHEDULE=
+    - REDMINE_BACKUP_EXPIRY=
+    - REDMINE_BACKUP_TIME=
+
+    - SMTP_ENABLED=false
+    - IMAP_ENABLED=false
+    - NGINX_HSTS_ENABLED=false
+
+    ports:
+    - "10443:443"
+    volumes:
+    - {{ docker_volumes }}/sameersbn-redmine/redmine:/home/redmine/data

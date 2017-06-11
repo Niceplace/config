@@ -1,14 +1,34 @@
 ---
 - name: linux-utils | ensure /opt directory is owned by current user
-    file:
-        path: /opt
-        owner: {{ user_id }}
-        group: {{ user_group }}
-        mode: 0755
+  file:
+    path: /opt
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: 0755
+  become: true
+  become_method: sudo
 
-- name: linux-utils | install vim latest
-    apt:
-        state: present
-        name: vim
-    become: true
-    become_method: sudo
+- name: linux-utils | install git, geany, gparted, meld, vim latest
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - git
+    - geany
+    - gparted
+    - meld
+    - vim
+  become: true
+  become_method: sudo
+
+- name: linux-utils | add relevant entries to /etc/hosts
+  blockinfile:
+    path: /etc/hosts
+    state: present
+    insertafter: '^127.0.1.1'
+    block: |
+      127.0.1.1       redmine-server.niceplace.ca
+      127.0.1.1       wekan-server.niceplace.ca
+      127.0.1.1       local-niceplace.github.io
+  become: true
+  become_method: sudo

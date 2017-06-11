@@ -1,28 +1,63 @@
 ---
 - name: nodejs | remove old node package to avoid conflicts
-    apt:
-      name: node
-      state: absent
+  apt:
+    name: node
+    state: absent
+  become: true
+  become_method: sudo
 
 - name: nodejs | make sure dependencies are installed
-    apt:
-      name: build-essential
-      state: present
-      update_cache: yes
+  apt:
+    name: build-essential
+    state: present
+    update_cache: yes
+  become: true
+  become_method: sudo
+
+- name: nodejs | configure env variables for npm global package directory
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.profile"
+    state: present
+    insertafter: EOF
+    block: |
+      NPM_PACKAGES=~/.npm-packages
+      export NODE_PATH=$NPM_PACKAGES/lib/node_modules:$NODE_PATH
+      export PATH=$PATH:$NPM_PACKAGES/bin
+  become: true
+  become_user: "{{ ansible_env.USER }}"
+
+- name: nodejs | configure global package directory
+  file:
+    path: "{{ ansible_env.HOME }}/.npm-global"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: 0775
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
 
 - name: nodejs | fetch ppa install script for nodesource ppa
-    get_url:
-      url: https://deb.nodesource.com/setup_6.x
-      dest: /tmp/nodejs_install.sh
+  get_url:
+    url: https://deb.nodesource.com/setup_6.x
+    dest: /tmp/nodejs_install.sh
 
-- name: nodejs | run ppa install script
-    script: /tmp/nodejs_install.sh
-    args:
-        removes: /tmp/nodejs_install.sh
-    become: true
-    become_method: sudo
+- name: nodejs | execute ppa install script
+  script: /tmp/nodejs_install.sh
+  args:
+    removes: /tmp/nodejs_install.sh
 
-- name: install nodejs
-    apt:
-      name: nodejs
-      state: present
+- name: nodejs | install nodejs with apt
+  apt:
+    name: nodejs
+    state: present
+  become: true
+  become_method: sudo
+
+- name: nodejs | configure prefix
+  command: npm config set prefix '~/.npm-global'
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: nodejs | reload .profile
+  shell: "source {{ ansible_env.HOME }}/.profile"
+  args:
+    executable: /bin/bash
+  check_mode: yes

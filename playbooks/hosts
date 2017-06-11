@@ -1,2 +1,2 @@
 [ubuntu-hosts]
-localhost
+localhost ansible_connection=local

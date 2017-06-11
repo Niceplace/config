@@ -1,15 +1,17 @@
 ---
-name: pycharm | download pycharm installer
-    get_url:
-        url: {{ pycharm['url] }}
-        checksum: {{ pycharm['checksum'] }}
-        dest: "{{ software_installation_folder }}pycharm/pycharm_installer.tar.gz"
-        group: {{ user_group }}
-        owner: {{ user_id }}
-        
-name: pycharm | extract pycharm installation
-    unarchive:
-        src: "{{ software_installation_folder }}pycharm/pycharm_installer.tar.gz"
-        dest: "{{ software_installation_folder }}pycharm"
-        group: {{ user_group }}
-        owner: {{ user_id }}
+- name: pycharm | download pycharm installer
+  get_url:
+    url: "{{ pycharm['url] }}"
+    checksum: "{{ pycharm['checksum'] }}"
+    dest: "{{ pycharm_installation_folder }}/pycharm_installer.tar.gz"
+    group: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_env.USER }}"
+    mode: 0755
+
+- name: pycharm | extract pycharm installation
+  unarchive:
+    src: "{{ pycharm_installation_folder }}/pycharm_installer.tar.gz"
+    dest: "{{ pycharm_installation_folder }}/pycharm"
+    group: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_env.USER }}"
+    mode: 0755

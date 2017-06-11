@@ -12,34 +12,34 @@
 
 - name: java | accept oracle terms
   debconf:
-    name: '{{ item }}'
+    name: "{{ item }}"
     question: 'shared/accepted-oracle-license-v1-1'
     vtype: 'select'
     value: 'true'
   with_items:
     - oracle-java8-installer
-  become: yes
+  become: true
   become_method: sudo
 
 - name: java | nuke java7
   apt:
     state: absent
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - oracle-java7-installer
     - oracle-java7-unlimited-jce-policy
-  become: yes
+  become: true
   become_method: sudo
 
 - name: java | install java8 with default & jce-policy
   apt:
     state: present
-    name: '{{ item }}'
+    name: "{{ item }}"
   with_items:
     - oracle-java8-installer
     - oracle-java8-set-default
     - oracle-java8-unlimited-jce-policy
-  become: yes
+  become: true
   become_method: sudo
 
 - name: java | set JAVA_HOME in .profile
@@ -51,4 +51,4 @@
         "export JAVA_HOME=/usr/bin/java"
         "export PATH="$PATH:$JAVA_HOME/bin"
   become: true
-  become_user: "{{ user }}"
+  become_user: "{{ ansible_env.USER }}"

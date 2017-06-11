@@ -1,0 +1,17 @@
+---
+- name: tlp | add ubuntu PPA
+  apt_repository:
+    repo: "ppa:linrunner/tlp"
+  become: true
+  become_method: sudo
+
+- name: tlp | install tlp and dependencies
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - tlp
+    - tlp-rdw
+    - tp-smapi-dkms
+    - acpi-call-dkms
+  become: true
+  become_method: sudo

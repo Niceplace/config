@@ -1,0 +1,29 @@
+---
+- name: wekan-server | create wekan docker volume folder
+  file:
+      path: "{{ docker_volumes }}/wekan-server"
+      state: directory
+      owner: "{{ ansible_env.USER }}"
+      group: "{{ ansible_env.USER }}"
+      mode: 0755
+  become: true
+  become_method: sudo
+
+- name: wekan-server | create wekan docker-compose project folder
+  file:
+    path: "{{ docker_compose_projects }}/wekan-server"
+    state: directory
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: 0755
+  become: true
+  become_method: sudo
+
+- name: wekan-server | copy docker-compose.yml to wekan-server project folder
+  template:
+    src: docker-compose-wekan.yml.j2
+    dest: "{{ docker_compose_projects }}/wekan-server/docker-compose.yml"
+
+- name: wekan-server | start docker-compose project as detached
+  command: "docker-compose -f {{ docker_compose_projects }}/wekan-server/docker-compose.yml up -d"
+  ignore_errors: "{{ ansible_check_mode }}"

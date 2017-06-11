@@ -1,0 +1,37 @@
+---
+- name: zeal | install zeal docs
+  apt:
+      name: zeal
+      state: present
+  become: true
+  become_method: sudo
+
+- name: zeal | download & extract docsets to zeal docset folder
+  unarchive:
+      url: "{{ item.url }}"
+      dest: "{{ item.destination }}"
+      remote_src: true
+  with_items:
+      - { url: "http://frankfurt.kapeli.com/feeds/Ansible.tgz", destination: "{{ zeal_docset_folder }}/Ansible.tgz" }
+      - { url: "http://sanfrancisco.kapeli.com/feeds/Bootstrap_3.tgz", destination: "{{ zeal_docset_folder }}/Bootstrap_3.tgz" }
+      - { url: "http://sanfrancisco.kapeli.com/feeds/Bootstrap_4.tgz", destination: "{{ zeal_docset_folder }}/Bootstrap_4.tgz" }
+      - { url: "http://newyork.kapeli.com/feeds/Python_2.tgz", destination: "{{ zeal_docset_folder }}/Python2.tgz" }
+      - { url: "http://frankfurt.kapeli.com/feeds/Python_3.tgz", destination: "{{ zeal_docset_folder }}/Python3.tgz" }
+      - { url: "http://frankfurt.kapeli.com/feeds/D3JS.tgz", destination: "{{ zeal_docset_folder }}/D3js.tgz" }
+      - { url: "http://sanfrancisco.kapeli.com/feeds/Flask.tgz", destination: "{{ zeal_docset_folder }}/Flask.tgz" }
+      - { url: "http://sanfrancisco.kapeli.com/feeds/NodeJS.tgz", destination: "{{ zeal_docset_folder }}/NodeJS.tgz" }
+      - { url: "http://sanfrancisco.kapeli.com/feeds/SVG.tgz", destination: "{{ zeal_docset_folder }}/SVG.tgz" }
+      - { url: "http://frankfurt.kapeli.com/feeds/jQuery.tgz", destination: "{{ zeal_docset_folder }}/Jquery.tgz" }
+      - { url: "http://sanfrancisco.kapeli.com/feeds/Sass.tgz", destination: "{{ zeal_docset_folder }}/Sass.tgz" }
+      - { url: "http://london.kapeli.com/feeds/WordPress.tgz", destination: "{{ zeal_docset_folder }}/WordPress.tgz" }
+  become: yes
+  become_user: "{{ ansible_env.USER }}"
+
+- name: zeal | delete docset archives if present
+  file:
+      path: "{{ item }}"
+      state: absent
+  with_fileglob:
+      - "{{ zeal_docset_folder }}/*.tgz"
+  become: true
+  become_user: "{{ ansible_env.USER }}"

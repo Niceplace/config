@@ -4,7 +4,7 @@ user_id: niceplace
 user_group: niceplace
 
 # Main folder where custom software is to be installed
-software_installation_folder : "/opt"
+pycharm_installation_folder : "/opt/pycharm"
 
 # Pycharm download URL
 pycharm:
@@ -14,3 +14,15 @@ pycharm:
 # Atom download url
 atom:
     url: https://atom.io/download/deb
+
+# Docker-volumes folder location
+docker_volumes: /opt/docker-volumes
+
+# Docker-projects folder location
+docker_projects: /opt/docker-projects
+
+# Docker-compose-projects folder location
+docker_compose_projects: /opt/docker-compose-projects
+
+# Zeal docset location
+zeal_docset_folder: "{{ ansible_env.HOME }}/.local/share/Zeal/Zeal/docsets"

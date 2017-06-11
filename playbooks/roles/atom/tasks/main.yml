@@ -1,22 +1,28 @@
 ---
 - name : atom | download deb package
-    get_url:
-        url: {{ atom['url] }}
-        dest: /tmp/atom_installer.deb
+  get_url:
+    url: "{{ atom['url'] }}"
+    dest: /tmp/atom_installer.deb
 
 - name: atom | install deb package
-    apt:
-        deb: /tmp/atom_installer.deb
-        state: present
-    become: true
-    become_method: sudo
-    removes: /tmp/atom_installer.deb
+  apt:
+    deb: /tmp/atom_installer.deb
+    state: present
+  become: true
+  become_method: sudo
+
+- name: atom | delete downloaded .deb package
+  file:
+    path: /tmp/atom_installer.deb
+    state: absent
 
 - name: atom | install plugins
-    command: apm install {{ item }}
-    with_items:
-        - language-docker
-        - linter
-        - platformio-ide-terminal
-        - autocomplete-python
-        - emmet
+  command: "apm install {{ item }}"
+  with_items:
+    - language-docker
+    - linter
+    - platformio-ide-terminal
+    - autocomplete-python
+    - emmet
+    - dash
+  ignore_errors: "{{ ansible_check_mode }}"
