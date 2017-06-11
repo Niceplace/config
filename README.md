@@ -1,4 +1,4 @@
-# This repo is for my Development Environment, it contains all files necessary for auto-configuration
+# This project is a playbook that replicates my current laptop configuration
 
 # Requirements to run the playbook
 * Unbuntu 16.04
@@ -16,6 +16,8 @@ If you need to run the playbook in check mode only, add the (**--check**) option
 ```
 ansible-playbook -i hosts --ask-sudo-pass devenv.yml --check
 ```
+
+> It is important to note that all downloaded docker-compose projects (redmine, wekan) are automatically started and configured to start upon boot.
 
 The playbook installs and configures the following software :
 
@@ -58,5 +60,4 @@ The playbook installs and configures the following software :
     * latest meld for ubuntu
     * latest vim for ubuntu
 
-Also, it configures the **/opt** folder to be owned by the current user and to contain all docker, docker-compose projects and volume folders.
-All downloaded docker-compose projects are automatically started.
+Also, it configures the **/opt** folder on the host to be owned by the current user and to contain all docker, docker-compose projects and volume folders.
