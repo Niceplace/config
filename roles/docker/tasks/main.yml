@@ -13,7 +13,7 @@
 
 - name : docker | install docker's official GPG key
   apt_key:
-    keyserver: https://download.docker.com/linux/ubuntu/gpg
+    url: https://download.docker.com/linux/ubuntu/gpg
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     state: present
   become: true
@@ -26,7 +26,7 @@
 
 - name: docker | add apt repository
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu{{ lsb_release_cs }}stable"
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu{{ lsb_release_cs }} stable"
     state: present
   become: true
   become_method: sudo
